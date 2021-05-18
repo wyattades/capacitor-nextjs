@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">capacitornextjs</string>
+    <string name="title_activity_main">capacitornextjs</string>
+    <string name="package_name">com.wyattades.capacitornextjs</string>
+    <string name="custom_url_scheme">com.wyattades.capacitornextjs</string>
+</resources>
