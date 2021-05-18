@@ -1,16 +1,13 @@
 import React from "react";
-import Link from "next/link";
+
+import Link from "components/Link";
+import Layout from "components/Layout";
 
 const IndexPage = () => {
   return (
-    <div>
-      <h1>Hello world</h1>
-      <div>
-        <Link href="/about" passHref>
-          <a>About</a>
-        </Link>
-      </div>
-    </div>
+    <Layout>
+      <h1>Index page</h1>
+    </Layout>
   );
 };
 

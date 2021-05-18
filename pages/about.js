@@ -1,16 +1,13 @@
 import React from "react";
-import Link from "next/link";
+
+import Link from "components/Link";
+import Layout from "components/Layout";
 
 const AboutPage = () => {
   return (
-    <div>
-      <h1>About me</h1>
-      <div>
-        <Link href="/" passHref>
-          <a>Home</a>
-        </Link>
-      </div>
-    </div>
+    <Layout>
+      <h1>About page</h1>
+    </Layout>
   );
 };
 

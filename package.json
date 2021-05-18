@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "scripts/app_dev_server.sh",
     "www": "next build && next export -o www"
   },
   "dependencies": {
@@ -16,5 +16,10 @@
     "next": "^10.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.6",
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4"
   }
 }
