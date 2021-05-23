@@ -1,18 +1,12 @@
 {
-  "appId": "com.wyattades.capacitornextjs",
-  "appName": "capacitornextjs",
-  "bundledWebRuntime": false,
-  "npmClient": "yarn",
-  "webDir": "www",
-  "linuxAndroidStudioPath": "/home/wyatt/apps/android-studio/bin/studio.sh",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "server": {
-    "url": "$DEV_SERVER_URL",
-    "cleartext": true
-  },
-  "cordova": {}
+	"appId": "com.wyattades.capacitornextjs",
+	"appName": "Capacitor Next.js",
+	"bundledWebRuntime": false,
+	"webDir": "www",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {}
 }

@@ -2,13 +2,13 @@ import React from "react";
 
 import Layout from "components/Layout";
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ query }) => {
   // fake delay
   await new Promise((r) => setTimeout(r, 1000));
 
   return {
     props: {
-      itemId: params.item_id,
+      itemId: "NEAT " + query.item_id + " " + new Date().toTimeString(),
     },
   };
 };

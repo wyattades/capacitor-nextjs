@@ -5,15 +5,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "scripts/app_dev_server.sh",
+    "sync-dev": "CAPACITOR_DEV=1 npx cap sync",
+    "dev": "next dev",
     "www": "next build && next export -o www"
   },
   "dependencies": {
-    "@capacitor/android": "2.4.7",
-    "@capacitor/cli": "^2.4.7",
-    "@capacitor/core": "^2.4.7",
-    "@capacitor/ios": "2.4.7",
-    "next": "^10.2.0",
+    "@capacitor/android": "^3.0.0",
+    "@capacitor/cli": "^3.0.0",
+    "@capacitor/core": "^3.0.0",
+    "@capacitor/ios": "^3.0.0",
+    "next": "^10.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
