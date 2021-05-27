@@ -1,6 +1,6 @@
 # Capacitor and Next.js
 
-Give a [Next.js](https://nextjs.org) app, compile it into a mobile app using the [Capactior](https://capacitorjs.com/) toolchain.
+Given a [Next.js](https://nextjs.org) app, compile it into a mobile app using the [Capacitor](https://capacitorjs.com/) toolchain.
 
 ## Build details
 
@@ -9,6 +9,11 @@ Give a [Next.js](https://nextjs.org) app, compile it into a mobile app using the
 - `<filename>.mobile.js` files have priority and will be loaded instead of `<filename>.js` files
 
 ## Mobile app development
+
+Environment setup:
+
+- Follow the instructions here to setup Android Studio and/or XCode: https://capacitorjs.com/docs/getting-started/environment-setup
+- Run `yarn install`
 
 In separate terminals, run the Next.js dev server (for serving api requests) and the mobile app dev server (for serving static assets):
 
