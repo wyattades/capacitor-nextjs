@@ -2,21 +2,28 @@ import React from "react";
 
 import Layout from "components/Layout";
 
-export const getServerSideProps = async ({ query }) => {
+/**
+ * Thing page uses `getServerSideProps` with a `rewrite`:
+ * e.g. /items/show?item_id=foo_bar  ->  /items/foo_bar
+ */
+
+export const getServerSideProps = async ({ params, query }) => {
+  const itemId = params?.item_id ?? query.item_id;
+
   // fake delay
   await new Promise((r) => setTimeout(r, 1000));
 
   return {
     props: {
-      itemId: "NEAT " + query.item_id + " " + new Date().toTimeString(),
+      content: "NEAT " + itemId + " " + new Date().toTimeString(),
     },
   };
 };
 
-const ItemPage = ({ itemId }) => {
+const ItemPage = ({ content }) => {
   return (
     <Layout>
-      <h1>Item page: {itemId}</h1>
+      <h1>Item page: {content}</h1>
     </Layout>
   );
 };

@@ -8,6 +8,9 @@ const Nav = () => {
       <Link href="/">Home</Link>
       <Link href="/about">About</Link>
       <Link href="/items/my_cool_item">My Item</Link>
+      <Link href="/things/my_neat_thing">My Thing</Link>
+      <Link href="/statics/foo">Static foo</Link>
+      <Link href="/statics/does_not_exist">Static DNE</Link>
 
       <style jsx>{`
         div {

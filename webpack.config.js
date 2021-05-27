@@ -1,9 +1,9 @@
 const path = require("path");
 const fs = require("fs");
-const _ = require("lodash");
 const webpack = require("webpack");
-const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+// const _ = require("lodash");
+// const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
+// const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const { execSync } = require("child_process");
@@ -101,7 +101,7 @@ module.exports = {
       next: path.resolve(__dirname, "lib/mobile/next-alias"),
     },
     extensions: [
-      // these are loaded with priority e.g. filename.mobile.js is loaded instead of filename.js
+      // these are loaded with priority e.g. <filename>.mobile.js is loaded instead of <filename>.js
       ...extensions.map((e) => ".mobile" + e),
       ...extensions,
     ],
