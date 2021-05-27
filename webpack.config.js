@@ -15,10 +15,10 @@ if (!["development", "test", "production"].includes(mode))
 const tsconfigFile = path.resolve(__dirname, "tsconfig.json");
 const extensions = [".ts", ".js", ".tsx", ".jsx"];
 
-const DEPLOY_ENV =
-  mode === "production" && !!process.env.IS_STAGING_ENV ? "staging" : mode;
+// const DEPLOY_ENV =
+//   mode === "production" && !!process.env.IS_STAGING_ENV ? "staging" : mode;
 
-const isDev = DEPLOY_ENV === "development";
+const isDev = mode === "development";
 
 /** @type {webpack.Configuration} */
 module.exports = {
@@ -100,7 +100,11 @@ module.exports = {
 
       next: path.resolve(__dirname, "lib/mobile/next-alias"),
     },
-    extensions,
+    extensions: [
+      // these are loaded with priority e.g. filename.mobile.js is loaded instead of filename.js
+      ...extensions.map((e) => ".mobile" + e),
+      ...extensions,
+    ],
 
     // FIXME: this overwrites the resolve.alias['next'] above...
     // plugins: [

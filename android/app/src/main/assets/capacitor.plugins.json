@@ -1,1 +1,6 @@
-[]
+[
+	{
+		"pkg": "@capacitor/dialog",
+		"classpath": "com.capacitorjs.plugins.dialog.DialogPlugin"
+	}
+]
