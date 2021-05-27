@@ -8,9 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "sync-dev": "CAPACITOR_DEV=1 npx cap sync",
-    "build-app": "BUILD_APP=1 NODE_ENV=production webpack",
-    "dev-app": "BUILD_APP=1 NODE_ENV=development webpack server --hot-only",
-    "//build-app": "BUILD_APP=1 next build && BUILD_APP=1 next export -o www"
+    "build-app": "BUILD_APP=1 NODE_ENV=production webpack && cp www/index.html www/404.html",
+    "dev-app": "BUILD_APP=1 NODE_ENV=development webpack serve --hot-only"
   },
   "dependencies": {
     "@capacitor/android": "^3.0.0",
@@ -26,17 +25,12 @@
     "react-use": "^17.2.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "@babel/preset-react": "^7.13.13",
-    "@babel/preset-typescript": "^7.13.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/react": "^17.0.6",
-    "babel-loader": "^8.2.2",
-    "core-js": "^3.13.0",
     "fork-ts-checker-webpack-plugin": "^6.2.10",
     "html-webpack-plugin": "^5.3.1",
     "prettier": "^2.3.0",
-    "styled-jsx": "^3.4.4",
+    "react-refresh": "^0.10.0",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.2.4",
     "webpack": "^5.37.1",

@@ -6,6 +6,7 @@ const webpack = require("webpack");
 const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const mode = process.env.NODE_ENV;
 if (!["development", "test", "production"].includes(mode))
@@ -42,17 +43,26 @@ const isDev = DEPLOY_ENV === "development";
 
 /** @type {webpack.Configuration} */
 module.exports = {
+  name: "mobile-app",
   entry: "./lib/mobile/main",
-  mode,
+  mode: isDev ? "development" : "production",
   target: "web",
+
   output: {
     // libraryTarget: "commonjs2",
     filename: "index.js",
     path: path.join(__dirname, "www"),
     publicPath: "/",
   },
+
   optimization: {
-    minimize: false,
+    minimize: !isDev,
+  },
+
+  cache: {
+    type: "filesystem",
+    cacheDirectory: path.resolve(__dirname, ".next", "cache", "webpack"),
+    version: "mobile-app-1",
   },
 
   devServer: {
@@ -67,7 +77,7 @@ module.exports = {
     }),
 
     new webpack.EnvironmentPlugin({
-      NODE_ENV: mode,
+      // NODE_ENV: mode, // handled by next-babel-loader
       __NEXT_ROUTER_BASEPATH: "",
       __NEXT_TRAILING_SLASH: false,
       __NEXT_CROSS_ORIGIN: false,
@@ -100,6 +110,9 @@ module.exports = {
     //       configFile: tsconfigFile,
     //     },
     //   }),
+
+    isDev && new webpack.HotModuleReplacementPlugin(),
+    isDev && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
 
   resolve: {
@@ -113,7 +126,7 @@ module.exports = {
     },
     extensions,
 
-    // TODO: this overwrites the resolve.alias['next'] above...
+    // FIXME: this overwrites the resolve.alias['next'] above...
     // plugins: [
     //   new TsconfigPathsPlugin({ configFile: tsconfigFile, extensions }),
     // ],
@@ -123,9 +136,22 @@ module.exports = {
     rules: [
       {
         test: /\.[jt]sx?$/,
-        loader: "babel-loader",
+        // loader: "babel-loader",
+        loader: require.resolve(
+          "next/dist/build/webpack/loaders/next-babel-loader"
+        ),
         options: {
-          caller: { pagesDir: path.resolve(__dirname, "pages") },
+          pagesDir: path.resolve(__dirname, "pages"),
+          configFile: path.resolve(__dirname, "babel.config.js"),
+          cwd: process.cwd(),
+          isServer: false,
+          development: isDev,
+          hasReactRefresh: isDev,
+          // Webpack 5 has a built-in loader cache
+          cache: false,
+          distDir: null, // used for cache
+          // package.json `react` version is >= `17.0.0-rc.1`
+          hasJsxRuntime: true,
         },
         exclude: /node_modules/,
       },
