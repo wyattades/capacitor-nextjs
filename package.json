@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "sync-dev": "CAPACITOR_DEV=1 npx cap sync",
-    "build-app": "BUILD_APP=1 NODE_ENV=production webpack && cp www/index.html www/404.html",
+    "build-app": "BUILD_APP=1 NODE_ENV=production webpack",
     "dev-app": "BUILD_APP=1 NODE_ENV=development webpack serve --hot-only"
   },
   "dependencies": {
