@@ -1,13 +1,13 @@
 import { CapacitorConfig } from "@capacitor/cli";
 import { execSync } from "child_process";
 
+const DEV_PORT = 8080;
+
 const devServerUrl = process.env.CAPACITOR_DEV
   ? `http://${execSync("ip route get 1 | awk '{print $7}'")
       .toString()
-      .trim()}:3000`
+      .trim()}:${DEV_PORT}`
   : null;
-
-console.log({ devServerUrl });
 
 const config: CapacitorConfig = {
   appId: "com.wyattades.capacitornextjs",
