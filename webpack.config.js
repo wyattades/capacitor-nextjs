@@ -1,12 +1,12 @@
 const path = require("path");
 const fs = require("fs");
-// const dotenv = require("dotenv");
 const _ = require("lodash");
 const webpack = require("webpack");
 const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const { execSync } = require("child_process");
 
 const mode = process.env.NODE_ENV;
 if (!["development", "test", "production"].includes(mode))
@@ -19,27 +19,6 @@ const DEPLOY_ENV =
   mode === "production" && !!process.env.IS_STAGING_ENV ? "staging" : mode;
 
 const isDev = DEPLOY_ENV === "development";
-
-// const HOST_URL =
-//   DEPLOY_ENV === "production"
-//     ? "https://vanly.app"
-//     : DEPLOY_ENV === "staging"
-//     ? "https://staging.vanly.app"
-//     : "http://localhost:3000";
-
-// const IS_DEPLOYED =
-//   !isBinTs && (DEPLOY_ENV === "production" || DEPLOY_ENV === "staging");
-
-// const loadEnvs = (filename, shouldLoad) => {
-//   if (!shouldLoad) return {};
-//   try {
-//     return dotenv.parse(
-//       fs.readFileSync(path.resolve(__dirname, "..", filename), "utf8")
-//     );
-//   } catch (_err) {
-//     return {};
-//   }
-// };
 
 /** @type {webpack.Configuration} */
 module.exports = {
@@ -68,6 +47,16 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, "public"),
     historyApiFallback: true,
+    host: "0.0.0.0",
+    // TODO: might want to call this `target` directly from the mobile app
+    // to better simulate how it will work in production
+    proxy: [
+      {
+        context: ["/api", "/_next"],
+        target: "http://localhost:3000",
+      },
+    ],
+    disableHostCheck: true,
   },
 
   plugins: [
@@ -77,6 +66,11 @@ module.exports = {
     }),
 
     new webpack.EnvironmentPlugin({
+      MOBILE_SERVER_HOST: isDev
+        ? "" // uses the current host
+        : "TODO-MOBILE_SERVER_HOST",
+      MOBILE_DEPLOYMENT_ID: isDev ? "development" : "TODO-MOBILE_DEPLOYMENT_ID",
+
       // NODE_ENV: mode, // handled by next-babel-loader
       __NEXT_ROUTER_BASEPATH: "",
       __NEXT_TRAILING_SLASH: false,
@@ -86,24 +80,6 @@ module.exports = {
       __NEXT_I18N_SUPPORT: false,
     }),
 
-    // new webpack.DefinePlugin({
-    //   "typeof window": JSON.stringify("undefined"),
-    //   ..._.transform(
-    //     {
-    //       // ...loadEnvs('.env.local', !IS_DEPLOYED),
-    //       // ...loadEnvs('.env.production.local', !IS_DEPLOYED && DEPLOY_ENV === 'production'),
-    //       NODE_ENV: mode,
-    //       // USE_LOCAL_DB: !IS_DEPLOYED && isDev,
-    //       // IS_DEPLOYED,
-    //       // DEPLOY_ENV,
-    //       // HOST_URL,
-    //       // IS_FUNCTIONS: true,
-    //     },
-    //     (m, v, k) => {
-    //       m[`process.env.${k}`] = JSON.stringify(v);
-    //     }
-    //   ),
-    // }),
     // IS_DEPLOYED &&
     //   new ForkTsCheckerWebpackPlugin({
     //     typescript: {
@@ -135,8 +111,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.[jt]sx?$/,
-        // loader: "babel-loader",
+        test: new RegExp(
+          `\\.(${extensions.map((e) => e.replace(/^\./, "")).join("|")})$`
+        ),
         loader: require.resolve(
           "next/dist/build/webpack/loaders/next-babel-loader"
         ),
@@ -147,11 +124,9 @@ module.exports = {
           isServer: false,
           development: isDev,
           hasReactRefresh: isDev,
-          // Webpack 5 has a built-in loader cache
-          cache: false,
+          cache: false, // Webpack 5 has a built-in loader cache
           distDir: null, // used for cache
-          // package.json `react` version is >= `17.0.0-rc.1`
-          hasJsxRuntime: true,
+          hasJsxRuntime: true, // i.e. package.json `react` version is >= `17.0.0-rc.1`
         },
         exclude: /node_modules/,
       },

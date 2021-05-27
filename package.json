@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "sync-dev": "CAPACITOR_DEV=1 npx cap sync",
-    "build-app": "BUILD_APP=1 NODE_ENV=production webpack",
-    "dev-app": "BUILD_APP=1 NODE_ENV=development webpack serve --hot-only"
+    "mobile:ios-dev": "CAPACITOR_DEV=1 npx cap copy ios && npx cap open ios",
+    "mobile:android-dev": "CAPACITOR_DEV=1 npx cap copy android && npx cap open android",
+    "mobile:build": "BUILD_APP=1 NODE_ENV=production webpack && npx cap sync",
+    "mobile:dev": "BUILD_APP=1 NODE_ENV=development webpack serve --hot-only"
   },
   "dependencies": {
     "@capacitor/android": "^3.0.0",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/react": "^17.0.6",
+    "dotenv": "^10.0.0",
     "fork-ts-checker-webpack-plugin": "^6.2.10",
     "html-webpack-plugin": "^5.3.1",
     "prettier": "^2.3.0",

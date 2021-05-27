@@ -1,5 +1,8 @@
 import { CapacitorConfig } from "@capacitor/cli";
 import { execSync } from "child_process";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const DEV_PORT = 8080;
 

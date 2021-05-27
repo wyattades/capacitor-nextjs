@@ -4,3 +4,6 @@ node_modules
 .env
 www
 .expo
+
+android/app/src/main/assets/capacitor.config.json
+ios/App/App/capacitor.config.json

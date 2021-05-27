@@ -7,6 +7,8 @@ const IndexPage = () => {
   return (
     <Layout>
       <h1>Index page</h1>
+
+      <p>Hello world!!!</p>
     </Layout>
   );
 };
